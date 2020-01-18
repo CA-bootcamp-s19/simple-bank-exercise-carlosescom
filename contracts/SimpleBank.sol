@@ -65,6 +65,7 @@ contract SimpleBank {
     /// @return The users enrolled status
     // Emit the appropriate event
     function enroll() public returns (bool){
+        enrolled[msg.sender] = true;
     }
 
     /// @notice Deposit ether into bank
