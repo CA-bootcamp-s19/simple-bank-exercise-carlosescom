@@ -89,11 +89,15 @@ contract SimpleBank {
     /// @param withdrawAmount amount you want to withdraw
     /// @return The balance remaining for the user
     // Emit the appropriate event    
-    function withdraw(uint withdrawAmount) public returns (uint) {
+    function withdraw(uint withdrawAmount) public payable returns (uint) {
         /* If the sender's balance is at least the amount they want to withdraw,
            Subtract the amount from the sender's balance, and try to send that amount of ether
            to the user attempting to withdraw. 
            return the user's balance.*/
+        require(withdrawAmount <= balances[msg.sender],"Attempting to withdraw more than has been deposited");
+        balances[msg.sender] -= withdrawAmount;
+        address(msg.sender).transfer(withdrawAmount);
+        emit LogWithdrawal(msg.sender,withdrawAmount,balances[msg.sender]);
     }
 
 }
