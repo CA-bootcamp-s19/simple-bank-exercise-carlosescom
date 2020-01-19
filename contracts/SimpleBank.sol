@@ -77,9 +77,11 @@ contract SimpleBank {
     // Use the appropriate global variables to get the transaction sender and value
     // Emit the appropriate event    
     // Users should be enrolled before they can make deposits
-    function deposit() public returns (uint) {
+    function deposit() public payable returns (uint) {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
+        balances[msg.sender] += msg.value;
+        emit LogDepositMade(msg.sender,msg.value);
     }
 
     /// @notice Withdraw ether from bank
